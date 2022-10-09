@@ -1,4 +1,3 @@
-// what t/f refers to is out of step with displayed question?
 // quotes in trivia qs are dialaying weird
 // 
 
@@ -31,22 +30,26 @@ async function main (){
     trueButton.addEventListener("click", isTrueCorrect);
     falseButton.addEventListener("click", isFalseCorrect);
     questionButton.addEventListener("click", nextQuestion);
-
+    resultLine.hidden = true
+    questionButton.hidden = true
 // Function to hide t/f buttons when answer submitted, and show again when new Q generated
 function toggleButtonVisibility(){
     if(trueButton.hidden, falseButton.hidden){
-    trueButton.hidden=false
-    falseButton.hidden=false
+    trueButton.hidden = false
+    falseButton.hidden = false
      } else{
     trueButton.hidden=true 
     falseButton.hidden=true
     }
 }
 
+
 // define  nextQuestion function:
 function nextQuestion(event){
     toggleButtonVisibility()
     questionField.textContent = triviaData.results[newQuestion].question
+    resultLine.hidden = true
+    questionButton.hidden=true
     return newQuestion
     }
 
@@ -64,6 +67,8 @@ function nextQuestion(event){
                 scoreCountDisplay.textContent = `Score: ${scoreCounter}`;
             }
            toggleButtonVisibility()
+           resultLine.hidden=false
+           questionButton.hidden=false
             newQuestion++;
             gameCounter++;
             gameCountDisplay.textContent = `Games played: ${gameCounter}`
@@ -86,6 +91,8 @@ function nextQuestion(event){
             scoreCountDisplay.textContent = `Score: ${scoreCounter}`;
           }
           toggleButtonVisibility()
+          resultLine.hidden=false
+          questionButton.hidden=false
           newQuestion++
           gameCounter++
           gameCountDisplay.textContent = `Games played: ${gameCounter}`
