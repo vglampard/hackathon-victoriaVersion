@@ -1,5 +1,4 @@
-// generalising the [0] with [i] made it so that the result of the quiz quedstion was 
-// simply the user input, i.e. hitting t/f led to win/loss 
+//new question button is resetting the new question but not the new question's answers
 
 // ADD line at end of isTruCorrect and isFalseCorrect to generate new question
 async function getTriviaData(){
@@ -31,13 +30,12 @@ async function main (){
     function isTrueCorrect(event){
         counter++
         scoreCounter.textContent = `Score: ${counter}`
-            if(triviaData.results[0]["correct_answer"] === "True"){
+            if(triviaData.results[i]["correct_answer"] === "True"){
                 resultLine.textContent = "You got it right!!!"
             } else {
                 resultLine.textContent = "You got it wrong!!!"
             }
-
-            newQuestion()
+            i++
         }
       
 // If user selects false
@@ -46,12 +44,12 @@ async function main (){
     function isFalseCorrect(event){
         counter++
         scoreCounter.textContent = `Score: ${counter}`
-        if(!triviaData.results[0]["correct_answer"] === "False"){
+        if(!triviaData.results[i]["correct_answer"] === "False"){
             resultLine.textContent = "Nice one u got it right"
         } else {
             resultLine.textContent = "got it wrong :("
           }
-          newQuestion()
+          i++
         }
 
 // define generate newQuestion function:
