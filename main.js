@@ -1,4 +1,4 @@
-//new question button is resetting the new question but not the new question's answers
+//hitting t/f AGAIN after answer submimtted also adds to score
 
 // ADD line at end of isTruCorrect and isFalseCorrect to generate new question
 async function getTriviaData(){
@@ -44,7 +44,7 @@ async function main (){
     function isFalseCorrect(event){
         counter++
         scoreCounter.textContent = `Score: ${counter}`
-        if(!triviaData.results[i]["correct_answer"] === "False"){
+        if(triviaData.results[i]["correct_answer"] === "False"){
             resultLine.textContent = "Nice one u got it right"
         } else {
             resultLine.textContent = "got it wrong :("
@@ -57,7 +57,6 @@ async function main (){
     i++
     questionField.textContent = triviaData.results[i].question
     }
-
 
 
 // Get API data and assign it to triviaData  
