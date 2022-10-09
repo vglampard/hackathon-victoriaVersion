@@ -1,5 +1,5 @@
 // quotes in trivia qs are dialaying weird
-// 
+
 
 // add a current question variable that stores question data from index [i]
 // which is used for event listeners, and moved on by 'new question'
@@ -32,7 +32,9 @@ async function main (){
     questionButton.addEventListener("click", nextQuestion);
     resultLine.hidden = true
     questionButton.hidden = true
-// Function to hide t/f buttons when answer submitted, and show again when new Q generated
+
+    
+// Function to hide t/f buttons when answer submitted, and show them again when new Q generated
 function toggleButtonVisibility(){
     if(trueButton.hidden, falseButton.hidden){
     trueButton.hidden = false
@@ -43,19 +45,29 @@ function toggleButtonVisibility(){
     }
 }
 
+// Function to run question text through HTML special character decoder and return decoded string:
+function decodeHTML(codedQuestion){
+    var textArea = document.createElement('textArea');
+    textArea.innerHTML = codedQuestion;
+    let decodedQuestion = textArea.value 
+    return decodedQuestion
+}
+
 
 // define  nextQuestion function:
 function nextQuestion(event){
     toggleButtonVisibility()
-    questionField.textContent = triviaData.results[newQuestion].question
+    //GET NEW Q AND DECODE IT
+    let newQ = decodeHTML(triviaData.results[newQuestion].question)
+    questionField.textContent = newQ
     resultLine.hidden = true
     questionButton.hidden=true
     return newQuestion
     }
 
 // If user selects true
-//  and is RIGHT - gives win message, logs a point
-//  and is WRONG - logs loss
+    //  and is RIGHT: win message, add point 
+    //  and is WRONG: lose message, docks point
     function isTrueCorrect(event){
             if(triviaData.results[newQuestion]["correct_answer"] === "True"){
                 resultLine.textContent = "You got it right!!!";
@@ -75,8 +87,8 @@ function nextQuestion(event){
         }
       
 // If user selects false
-        //  and is RIGHT - logs win
-        //  and is WRONG - logs loss
+    //and is RIGHT: win message, add point 
+    //  and is WRONG: lose message, docks point
     function isFalseCorrect(event){
 
         scoreCounter.textContent = `Score: ${scoreCounter}`;
@@ -102,29 +114,15 @@ function nextQuestion(event){
 // Get API data and assign it to triviaData  
     let triviaData = await getTriviaData()
 // Print question in browser
-    questionField.textContent = triviaData.results[newQuestion].question
-    console.log(triviaData)
+    
 
+questionField.textContent = triviaData.results[newQuestion].question
+console.log(triviaData)
 
-
-    currentQuestion = triviaData.results[newQuestion]
+currentQuestion = triviaData.results[newQuestion]
     
 }
 
 main()
 
 
-
-// ##### TO DO ######
-// Navigation button
-// score counter
-// sort out quotes in question
-// replace alert with printing 
-  
-// }
-// // Add event listener to false button, lay out function 
-// 
-// let answer = false;
-// //  for question[i]{
-// //     // if(answer === question.["correct_answer"]){return true}
-// //     //else return false
