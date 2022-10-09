@@ -1,6 +1,9 @@
-//hitting t/f AGAIN after answer submimtted also adds to score
 // what t/f refers to is out of step with displayed question?
+// quotes in trivia qs are dialaying weird
+// 
 
+// add a current question variable that stores question data from index [i]
+// which is used for event listeners, and moved on by 'new question'
 
 // ADD line at end of isTruCorrect and isFalseCorrect to generate new question
 async function getTriviaData(){
@@ -10,29 +13,48 @@ async function getTriviaData(){
 }
 
 // ##### MAIN FUNCTION #####
-// lines below lay out variables and functions for main async function
+// lines below lay out variables and functions for main async function when called
+// wrapping the api call in this main async function means I can use 'await'
 async function main (){
     let trueButton = document.querySelector("#inputTrue");
     let falseButton = document.querySelector("#inputFalse");
     let questionField = document.querySelector("#question");
-    let questionButton = document.querySelector("#newQuestion");
+    let questionButton = document.querySelector("#nextQuestion");
     let i = 0;
     let resultLine = document.querySelector("#result") ;
     let scoreCountDisplay = document.querySelector("#score");
     let gameCountDisplay = document.querySelector("#gamesPlayed")
     let gameCounter = 0;
     let scoreCounter = 0;
+    let newQuestion = 0;
 
     trueButton.addEventListener("click", isTrueCorrect);
     falseButton.addEventListener("click", isFalseCorrect);
-    questionButton.addEventListener("click", newQuestion);
+    questionButton.addEventListener("click", nextQuestion);
 
+// Function to hide t/f buttons when answer submitted, and show again when new Q generated
+function toggleButtonVisibility(){
+    if(trueButton.hidden, falseButton.hidden){
+    trueButton.hidden=false
+    falseButton.hidden=false
+     } else{
+    trueButton.hidden=true 
+    falseButton.hidden=true
+    }
+}
+
+// define  nextQuestion function:
+function nextQuestion(event){
+    toggleButtonVisibility()
+    questionField.textContent = triviaData.results[newQuestion].question
+    return newQuestion
+    }
 
 // If user selects true
-//  and is RIGHT - logs win
+//  and is RIGHT - gives win message, logs a point
 //  and is WRONG - logs loss
     function isTrueCorrect(event){
-            if(triviaData.results[i]["correct_answer"] === "True"){
+            if(triviaData.results[newQuestion]["correct_answer"] === "True"){
                 resultLine.textContent = "You got it right!!!";
                 scoreCounter++;
                 scoreCountDisplay.textContent = `Score: ${scoreCounter}`;
@@ -41,7 +63,8 @@ async function main (){
                 scoreCounter--;
                 scoreCountDisplay.textContent = `Score: ${scoreCounter}`;
             }
-            i++;
+           toggleButtonVisibility()
+            newQuestion++;
             gameCounter++;
             gameCountDisplay.textContent = `Games played: ${gameCounter}`
         }
@@ -52,34 +75,33 @@ async function main (){
     function isFalseCorrect(event){
 
         scoreCounter.textContent = `Score: ${scoreCounter}`;
-        if(triviaData.results[i]["correct_answer"] === "False"){
+        if(triviaData.results[newQuestion]["correct_answer"] === "False"){
             resultLine.textContent = "Nice one u got it right";
             scoreCounter++;
             scoreCountDisplay.textContent = `Score: ${scoreCounter}`;
+        
         } else {
             resultLine.textContent = "got it wrong :(";
             scoreCounter--;
             scoreCountDisplay.textContent = `Score: ${scoreCounter}`;
           }
-          i++
+          toggleButtonVisibility()
+          newQuestion++
           gameCounter++
           gameCountDisplay.textContent = `Games played: ${gameCounter}`
 
-        }
-
-// define generate newQuestion function:
-    function newQuestion(event){
-    i++
-    questionField.textContent = triviaData.results[i].question
     }
-
 
 // Get API data and assign it to triviaData  
     let triviaData = await getTriviaData()
 // Print question in browser
-    questionField.textContent = triviaData.results[0].question
-
+    questionField.textContent = triviaData.results[newQuestion].question
     console.log(triviaData)
+
+
+
+    currentQuestion = triviaData.results[newQuestion]
+    
 }
 
 main()
