@@ -1,10 +1,13 @@
-// quotes in trivia qs are dialaying weird
 
+/// decode function BROKEN!!!!!
 
-// add a current question variable that stores question data from index [i]
-// which is used for event listeners, and moved on by 'new question'
+flipGif.hidden = true
+let flipCoin = document.querySelector("#flipCoin")
+flipCoin.addEventListener("click", flipTheCoin)
+function flipTheCoin(event){
+    flipGif.hidden=false
+}
 
-// ADD line at end of isTruCorrect and isFalseCorrect to generate new question
 async function getTriviaData(){
     let response = await fetch("https://opentdb.com/api.php?amount=50&type=boolean")
     let triviaData = await response.json();
@@ -19,7 +22,6 @@ async function main (){
     let falseButton = document.querySelector("#inputFalse");
     let questionField = document.querySelector("#question");
     let questionButton = document.querySelector("#nextQuestion");
-    let i = 0;
     let resultLine = document.querySelector("#result") ;
     let scoreCountDisplay = document.querySelector("#score");
     let gameCountDisplay = document.querySelector("#gamesPlayed")
